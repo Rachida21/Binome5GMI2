@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
-import geometrie.Point;
+
 
 
 public class CDTheque implements Iterable<CDAudio> {
@@ -46,21 +46,18 @@ public class CDTheque implements Iterable<CDAudio> {
 		
 		}
 		else {
+			catalogue.add(cd);
 			cdByIsbn.put(cd.getISBN(), cd);
 			cdByartistetitle.put(clefArtisteTitre(cd), cd);
 			cdBystyletitle.put(clefStyleTitre(cd), cd);
 			return true;
-			
-			
-		}	
-		return false;	
-			
+		}
 				
 			
-			
-		}	
+	}			
+				
 
-	}
+	
    
 	/**
  	 * ajout d'un CD dans la CDTheque à partir de ses propriétés
@@ -85,9 +82,28 @@ public class CDTheque implements Iterable<CDAudio> {
 	 * supprimé
 	 */
 	public boolean supprimerCD(CDAudio cd) {
-		// TODO
+		// TODO 
+		
+	    if (cdByIsbn.containsKey(cd.getISBN())) {
+	        cdByIsbn.remove(cd.getISBN());
+	        cdByartistetitle.remove(clefArtisteTitre(cd));
+	        cdBystyletitle.remove(clefStyleTitre(cd));
+	        catalogue.remove(catalogue.indexOf(cd));
+	        return true;
+	        }
+	    
+	    else {
+	    	
+	    	return false;
+	    	}
+	       
+	    }
+		
+		
+		
+		
 
-	}
+	
 			
 	/**
 	 * suppression d'un CD dans la CDTheque à partir de son numéro ISBN
@@ -125,7 +141,7 @@ public class CDTheque implements Iterable<CDAudio> {
 	public boolean supprimerCDparStyleTitre(String style, String titre) {
 		// suppression du CD en se servant de son indexation par style et
 		// titre
-		return supprimerCD(clef(style, titre), cdByStyleTitle); // indexStyleTitre est la map 
+		return supprimerCD(clef(style, titre), cdBystyleTitle); // indexStyleTitre est la map 
 	}
 
 	/**
@@ -212,6 +228,17 @@ public class CDTheque implements Iterable<CDAudio> {
 	 */
 	private <K> boolean supprimerCD(K clef, Map<K,CDAudio> index) { 
         // TODO
+		if(index.containsKey(clef)) {
+			supprimerCD(index.get(clef));
+			return true;
+			
+		}
+		
+		else {
+			return false;
+		}
+		
+		
 	}
 
 	/**
